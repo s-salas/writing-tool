@@ -30,6 +30,10 @@ button {
     width: 70px;
 }
 
-.output {
-    
+.highlight {
+    color: green;
+}
+
+.hidden {
+    display: none;
 }
