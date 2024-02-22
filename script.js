@@ -121,14 +121,19 @@ function punctuationCheck() {
 // create function to highlight errors within pasted text
 
 function highlightErrors() {
-
     textWithErrors.innerHTML = pastedContent.value;
     textWithErrors.classList.remove("hidden");
     for (let i = 0; i < wordCheckArray.length; i++)
     if (textWithErrors.innerHTML.includes(wordCheckArray[i])) {
     let result1 = textWithErrors.innerHTML.replace(`${wordCheckArray[i]}`, `<span class="highlight">${wordCheckArray[i]}</span>`);
     textWithErrors.innerHTML = result1;
-    }
+    
+    for (let j = 0; j < punctuationToCheckFor.length; j++)
+    if (result1.includes(punctuationToCheckFor[j])) {
+        let result2 = result1.replace(`${punctuationToCheckFor[j]}`, `<span class="highlight">${punctuationToCheckFor[j]}`);
+        textWithErrors.innerHTML = result2;
+    } 
+}
 }
 
 // create function to display output header, and output content:
