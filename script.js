@@ -8,7 +8,7 @@ const punctuationCheckOutput = document.getElementById("punctuation-check-output
 const textWithErrors = document.getElementById("text-with-errors");
 
 // create array of words to check for:
-let wordsToCheckFor = ['the', 'a', 'an', 'ensure', 'in order to'];
+let wordsToCheckFor = ['the', 'a', 'an', 'ensure'];
 
 let phrasesToCheckFor = ['due to the fact', 'in order to', 'in regards to'];
 
@@ -123,18 +123,47 @@ function punctuationCheck() {
 function highlightErrors() {
     textWithErrors.innerHTML = pastedContent.value;
     textWithErrors.classList.remove("hidden");
-    for (let i = 0; i < wordCheckArray.length; i++)
-    if (textWithErrors.innerHTML.includes(wordCheckArray[i])) {
-    let result1 = textWithErrors.innerHTML.replace(`${wordCheckArray[i]}`, `<span class="highlight">${wordCheckArray[i]}</span>`);
-    textWithErrors.innerHTML = result1;
-    
-    for (let j = 0; j < punctuationToCheckFor.length; j++)
-    if (result1.includes(punctuationToCheckFor[j])) {
-        let result2 = result1.replace(`${punctuationToCheckFor[j]}`, `<span class="highlight">${punctuationToCheckFor[j]}`);
-        textWithErrors.innerHTML = result2;
+    for (let arr = pastedContent.value.split(' '), i = 0; i < wordsToCheckFor.length; i++) 
+    for(let j = 0; j < arr.length; j++) 
+    if (arr[j] === wordsToCheckFor[i]) {
+    arr[j] = `<span class="highlight">${wordsToCheckFor[i]}</span>`;
+    let results = arr.join(' ');
+    textWithErrors.innerHTML = results;
+    for (let k = 0; k < punctuationToCheckFor.length; k++)
+    if (results.includes(punctuationToCheckFor[k])) {
+        results = results.replace(`${punctuationToCheckFor[k]}`, `<span class="highlight">${punctuationToCheckFor[k]}</span>`);
+        textWithErrors.innerHTML = results;
     } 
+    }
+}
+
+/*
+textWithErrors.innerHTML = pastedContent.value;
+textWithErrors.classList.remove("hidden");
+for (let arr = pastedContent.value.split(' '), i = 0; i < wordCheckArray.length; i++) {
+    for (let j = 0; j < arr.length; j++)
+if (arr[j] === wordCheckArray[i]) {
+    arr[j] = `<span class="highlight">${arr[j]}</span>`;
+    let results = arr.join(' ');
+for (let k = 0; k < phrasesToCheckFor.length; k++) {
+if (results.includes(phrasesToCheckFor[k])) {
+    results = results.replace(`${phrasesToCheckFor[k]}`, `<span class="highlight">${phrasesToCheckFor[k]}</span>`);
+} 
+for (let l = 0; l < punctuationToCheckFor.length; l++) {
+if (results.includes(punctuationToCheckFor[l])) {
+    results = results.replace(`${punctuationToCheckFor[l]}`, `<span class="highlight">${punctuationToCheckFor[l]}</span>`);
+    
+} 
 }
 }
+}
+}
+textWithErrors.innerHTML = results;
+}
+*/
+    
+    
+
 
 // create function to display output header, and output content:
 function provideOutput() {
