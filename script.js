@@ -51,7 +51,7 @@ function clearOutput() {
     wordCheckOutput.innerText = "";
     punctuationCheckOutput.innerText = "";
     pastedContent.value = "";
-    textWithErrors.innerText = "";
+    textWithErrors.innerHTML = "";
     textWithErrors.classList.add("hidden");
     wordCheckArray = [];
     punctuationCheckArray = [];
@@ -118,11 +118,23 @@ function punctuationCheck() {
     punctuationCheckOutput.innerText = `${punctuationCheckArray.join(' | ')} ${parenthesisErrorMessage} ${quotationErrorMessage} ${doubleSpacingErrorMessage}`;
 }
 
+// create function to highlight errors within pasted text
+
+function highlightErrors() {
+
+    textWithErrors.innerHTML = pastedContent.value;
+    textWithErrors.classList.remove("hidden");
+    for (let i = 0; i < wordCheckArray.length; i++)
+    if (textWithErrors.innerHTML.includes(wordCheckArray[i])) {
+    let result1 = textWithErrors.innerHTML.replace(`${wordCheckArray[i]}`, `<span class="highlight">${wordCheckArray[i]}</span>`);
+    textWithErrors.innerHTML = result1;
+    }
+}
+
 // create function to display output header, and output content:
 function provideOutput() {
     outputHeader.textContent = "Output:";
     wordCheck();
     punctuationCheck();
-    textWithErrors.classList.remove("hidden");
-    textWithErrors.innerText = pastedContent.value;
+    highlightErrors();
 }
